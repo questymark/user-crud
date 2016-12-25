@@ -35,7 +35,6 @@ class UsersPage extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state);
   return {
     users: state.users
   };
