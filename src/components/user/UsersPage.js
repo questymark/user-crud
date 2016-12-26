@@ -9,38 +9,20 @@ class UsersPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.redirectToAddUserPage = this.redirectToAddUserPage.bind(this);
+    this.handleDeleteUser = this.handleDeleteUser.bind(this);
   }
   
   componentWillMount() {
     this.props.actions.loadUsers();
   }
 
-  // checkRequired() {
-  //   let disabled = false;
-  //   let empty = [];
-  //   const {promocode, required, errors} = this.state;
-  //   required.forEach(key => {
-  //     if (promocode[key] === "" || (promocode[key] instanceof Array && !promocode[key].length) || promocode[key] === null) {
-  //       empty.push(key);
-  //       errors[key] = 'Поле обязательно для заполнения';
-  //     } else {
-  //       let index = empty.indexOf(key);
-  //       if (index >= 0) {
-  //         empty.splice(index, 1)
-  //       }
-  //       errors[key] = '';
-  //     }
-  //   });
-  //
-  //   if (empty.length) {
-  //     disabled = true;
-  //   }
-  //
-  //   return disabled;
-  // }
-
   redirectToAddUserPage() {
     browserHistory.push('/user/add');
+  }
+
+  handleDeleteUser(event) {
+    event.preventDefault();
+    this.props.actions.deleteUser(event.target.dataset.id);
   }
 
   render() {
@@ -52,7 +34,7 @@ class UsersPage extends React.Component {
                value="Добавить пользователя"
                className="btn btn-primary"
                onClick={this.redirectToAddUserPage}/>
-        <UsersList users={users}/>
+        <UsersList handleDeleteUser={this.handleDeleteUser} users={users}/>
       </div>
     );
   }

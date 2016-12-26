@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import UsersListRow from './UsersListRow';
 
-const UsersList = ({users}) => {
+const UsersList = ({users, handleDeleteUser}) => {
   return (
     <table className="table">
       <thead>
@@ -15,7 +15,7 @@ const UsersList = ({users}) => {
       </thead>
       <tbody>
       {users.map(user =>
-        <UsersListRow user={user}/>
+        <UsersListRow user={user} handleDeleteUser={handleDeleteUser}/>
       )}
       </tbody>
     </table>

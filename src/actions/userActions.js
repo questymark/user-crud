@@ -54,5 +54,14 @@ export function saveUser(user) {
       dispatch(ajaxCallError(error));
       throw(error);
     });
-  };
+  }; 
+}
+
+export function deleteUser(id) {
+  return function (dispatch, getState) {
+    dispatch(beginAjaxCall());
+    return userApi.deleteUser(id).then((users) => {
+      dispatch(loadUsersSuccess(users));
+    })
+  }
 }

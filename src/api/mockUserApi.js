@@ -69,17 +69,17 @@ class UserApi {
     });
   }
 
-  // static deleteCourse(courseId) {
-  //   return new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       const indexOfCourseToDelete = users.findIndex(user => {
-  //         user.courseId == courseId;
-  //       });
-  //       users.splice(indexOfCourseToDelete, 1);
-  //       resolve();
-  //     }, delay);
-  //   });
-  // }
+  static deleteUser(id) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let users = JSON.parse(localStorage.getItem('users'));
+        const indexOfCourseToDelete = users.findIndex(user => user.id == id);
+        users.splice(indexOfCourseToDelete, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        resolve(Object.assign([], JSON.parse(localStorage.getItem('users'))));
+      }, delay);
+    });
+  }
 }
 
 export default UserApi;

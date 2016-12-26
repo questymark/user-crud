@@ -1,4 +1,5 @@
 import React from 'react';
+import MaskedInput from 'react-maskedinput';
 import TextInput from '../common/TextInput';
 
 const days = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
@@ -22,7 +23,7 @@ let years = [];
 for (let i = 1900; i <= new Date().getFullYear(); i++) {
 	years.push(i)
 }
-const UserForm = (props) => { 
+const UserForm = (props) => {
   return (
     <form>
       <h1>Редактирование пользователя</h1>
@@ -35,7 +36,7 @@ const UserForm = (props) => {
         />
 
 
-      <div className="form-group">
+      <div className={props.errors.birthday ? "form-group has-error" : "form-group"}>
         <label>Дата рождения</label>
         <div className="form-inline">
           <select
@@ -71,6 +72,7 @@ const UserForm = (props) => {
             })}
           </select>
         </div>
+        {props.errors.birthday && <div className="alert alert-danger">{props.errors.birthday}</div>}
       </div>
 
 
@@ -88,16 +90,23 @@ const UserForm = (props) => {
         onChange={props.onChange.bind(this, "city")}
       />
 
-      <TextInput
-        name="phone"
-        label="Телефон"
-        value={props.user.phone}
-        onChange={props.onChange.bind(this, "phone")}
-      />
+      <div className="form-group">
+        <label htmlFor="phone">Телефон</label>
+        <div className="field">
+          <MaskedInput
+            className="form-control"
+            mask="+7 111 111 11 11" 
+            name="card" 
+            size="20" 
+            onChange={props.onChange.bind(this, "phone")} 
+            value={props.user.phone} />
+        </div>
+      </div>
+
 
       <input
         type="submit"
-        disabled={props.saving}
+        disabled={props.saving || props.disabled}
         value={props.saving ? 'Сохранение...' : 'Сохранить'}
         className="btn btn-primary"
         onClick={props.onSave}/>

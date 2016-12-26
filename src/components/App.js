@@ -6,7 +6,9 @@ class App extends React.Component {
     const {children, loading} = this.props;
     return (
       <div>
-        <div className={loading ? "loader" : "loader none"}>Загрузка...</div>
+        <div className={loading ? "loader" : "loader none"}>
+          <span className="loader__text">Загрузка...</span>
+        </div>
         <div className="container">
           {children}
         </div>
