@@ -3,9 +3,13 @@ import {connect} from 'react-redux';
 
 class App extends React.Component {
   render() {
+    const {children, loading} = this.props;
     return (
-      <div className="container">
-        {this.props.children}
+      <div>
+        <div className={loading ? "loader" : "loader none"}>Загрузка...</div>
+        <div className="container">
+          {children}
+        </div>
       </div>
     );
   }
