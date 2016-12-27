@@ -34,7 +34,12 @@ class UsersPage extends React.Component {
                value="Добавить пользователя"
                className="btn btn-primary"
                onClick={this.redirectToAddUserPage}/>
-        <UsersList handleDeleteUser={this.handleDeleteUser} users={users}/>
+        {users.length ?
+          <UsersList handleDeleteUser={this.handleDeleteUser} users={users}/>
+          :
+          <div className="alert alert-info">Список пользователей пуст. Нажмите "Добавить пользователя"</div>
+        }
+        
       </div>
     );
   }

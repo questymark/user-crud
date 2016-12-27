@@ -20,7 +20,11 @@ const users = [
 ];
 
 const generateId = () => {
-  return JSON.parse(localStorage.getItem('users'))[JSON.parse(localStorage.getItem('users')).length - 1].id + 1;
+  if (JSON.parse(localStorage.getItem('users')).length) {
+    return JSON.parse(localStorage.getItem('users'))[JSON.parse(localStorage.getItem('users')).length - 1].id + 1;
+  } else {
+    return 1;
+  }
 };
 
 class UserApi {
