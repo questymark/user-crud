@@ -1,13 +1,17 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-import App from './components/App';
-import UsersPage from './components/user/UsersPage';
-import ManageUserPage from './components/user/ManageUserPage';
+import { Route, IndexRoute }  from 'react-router';
+
+import App from 'components/App';
+import MainPage from 'components/MainPage';
+import UsersPage from 'components/Users';
+import UserCard from 'components/Users/UserCard'
+import UserForm from 'components/Users/UserForm'
 
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={UsersPage} />
-    <Route path="user/add" component={ManageUserPage} />
-    <Route path="user/:id" component={ManageUserPage} />
+  <Route component={App} path='/'>
+    <IndexRoute component={MainPage} />
+    <Route component={UsersPage} path='users' />
+    <Route component={UserCard} path='users/card/:userId' />
+    <Route component={UserForm} path='users/new' />
   </Route>
 );
