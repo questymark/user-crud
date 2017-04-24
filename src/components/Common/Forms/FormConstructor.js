@@ -22,7 +22,9 @@ export default class FormConstructor extends Component {
     handleFormChange(values, fields) {
         console.log(`<${fields[0]}> changed:`, values[fields[0]]);
 
-        this.setState({ form: values });
+        this.setState({ form: values }, () => {
+            console.log(this.state.form);
+        });
     }
 
     renderForm(formContent) {

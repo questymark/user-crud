@@ -24,11 +24,11 @@ class UserCard extends Component {
     }
 
     componentWillMount() {
-        this.props.getUser(this.props.params.id);
+        this.props.getUser(this.props.params.userId);
     }
 
     render() {
-        console.log(this.props);
+        console.log(this.props.users.user);
 
         return(
             <div>UserCard</div>

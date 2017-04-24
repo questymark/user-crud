@@ -10,14 +10,22 @@ export default class Calendar extends Component {
         super(props);
 
         this.state = {
-            startDate: ''
+            date: ''
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.value && nextProps) {
+            this.setState({
+                date: nextProps.value
+            })
+        }
+    }
+
     handleChange(date) {
         this.setState({
-            startDate: date
+            date: date
         });
 
         this.props.onChange && this.props.onChange(date)
@@ -30,7 +38,7 @@ export default class Calendar extends Component {
             showMonthDropdown
             showYearDropdown
             dropdownMode="select"
-            selected={this.state.startDate}
+            selected={this.state.date}
             onChange={this.handleChange}
         />;
     }

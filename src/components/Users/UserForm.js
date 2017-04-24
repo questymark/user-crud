@@ -4,20 +4,26 @@ import { Field } from 'react-formal';
 import { withRouter, browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import InputWrapper from 'components/Common/Forms/InputWrapper';
 import FormConstructor from 'components/Common/Forms/FormConstructor';
 import { SibmitButton } from 'components/Common/Forms/Button';
 import Calendar from 'components/Widgets/Calendar';
-import { createUser } from 'ducks/users';
+import { createUser, getUser } from 'ducks/users';
 
 const getState = state => ({
     createUserLoading: state.users.createUserLoading,
-    createUserLoaded: state.users.createUserLoaded
+    createUserLoaded: state.users.createUserLoaded,
+
+    userLoading: state.users.userLoading,
+    userLoaded: state.users.userLoaded,
+    user: state.users.user
 });
 
 const getActions = dispatch => bindActionCreators({
-    createUser
+    createUser,
+    getUser,
 }, dispatch);
 
 class UserForm extends FormConstructor {
@@ -36,7 +42,7 @@ class UserForm extends FormConstructor {
                 .required('Город обязателен для заполнения'),
             adress: yup.string()
                 .required('Адрес обязателен для заполнения'),
-            phone: yup.number()
+            phone: yup.string()
                 .required('Телефон обязателен для заполнения'),
             some: yup.object()
         });
@@ -47,10 +53,26 @@ class UserForm extends FormConstructor {
         };
     }
 
+    componentWillMount() {
+        const { userId } = this.props.params;
+
+        if (userId !== 'new') {
+            this.props.getUser(userId);
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
+
+        if (this.props.userLoading && nextProps.userLoaded) {
+            const formValue = this.schema.cast(nextProps.user);
+
+            this.setState({
+                form: {...formValue, birthday: moment(formValue.birthday)}
+            });
+        }
+
         if (this.props.createUserLoading && nextProps.createUserLoaded) {
-            console.log('user create success');
-            browserHistory('users');
+            browserHistory.push('users');
         }
     }
 
@@ -70,7 +92,7 @@ class UserForm extends FormConstructor {
                     </InputWrapper>
 
                     <InputWrapper label='Дата рождения'  error={this.state.errors.birthday}>
-                        <Field name='birthday' type={Calendar} />
+                        <Field name='birthday' placeholder='Дата рождения' type={Calendar} />
                     </InputWrapper>
 
                     <InputWrapper label='Город'  error={this.state.errors.city}>
@@ -82,7 +104,7 @@ class UserForm extends FormConstructor {
                     </InputWrapper>
 
                     <InputWrapper label='Телефон'  error={this.state.errors.phone}>
-                        <Field name='phone' placeholder='Телефон' className='form-control' />
+                        <Field name='phone' mask="+4\9 99 999 99" placeholder='Телефон' className='form-control' />
                     </InputWrapper>
 
                     <InputWrapper>
@@ -94,4 +116,4 @@ class UserForm extends FormConstructor {
     }
 }
 
-export default connect(getState, getActions)(withRouter(UserForm));
+export default connect(getState, getActions)(UserForm);

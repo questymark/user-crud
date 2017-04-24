@@ -5,9 +5,9 @@ const GET_USER_LIST = 'GET_USER_LIST';
 const GET_USER_LIST_SUCCESS = 'GET_USER_LIST_SUCCESS';
 const GET_USER_LIST_FAILURE = 'GET_USER_LIST_FAILURE';
 
-const GET_USER = 'GET_USER_LIST';
-const GET_USER_SUCCESS = 'GET_USER_LIST_SUCCESS';
-const GET_USER_FAILURE = 'GET_USER_LIST_FAILURE';
+const GET_USER = 'GET_USER';
+const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+const GET_USER_FAILURE = 'GET_USER_FAILURE';
 
 const CREATE_USER = 'CREATE_USER';
 const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
@@ -29,7 +29,7 @@ export function createUser(data) {
     const params = data;
 
     return dispatch => apiRequest('post', `/users`,
-        [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE], dispatch,
+        [CREATE_USER, CREATE_USER_SUCCESS, CREATE_USER_FAILURE], dispatch,
         params
     );
 }
@@ -68,18 +68,18 @@ export default function (state = initialState, action) {
 
         case GET_USER: {
             return {
+                ...state,
                 userLoading: true,
-                userLoaded: false,
-                ...state
+                userLoaded: false
             }
         }
 
         case GET_USER_SUCCESS: {
             return {
+                ...state,
                 userLoading: false,
                 userLoaded: true,
-                user: action.data.data,
-                ...state
+                user: action.data.data
             }
         }
 
@@ -91,26 +91,26 @@ export default function (state = initialState, action) {
 
         case CREATE_USER: {
             return {
+                ...state,
                 createUserLoading: true,
-                createUserLoaded: false,
-                ...state
+                createUserLoaded: false
             }
         }
 
         case CREATE_USER_SUCCESS: {
             return {
+                ...state,
                 createUserLoading: false,
-                createUserLoaded: true,
-                ...state
+                createUserLoaded: true
             }
         }
 
         case CREATE_USER_FAILURE: {
             return {
+                ...state,
                 createUserLoading: false,
                 createUserLoaded: false,
-                createUserErrors: [],
-                ...state
+                createUserErrors: []
             }
         }
 

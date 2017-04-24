@@ -11,7 +11,7 @@ export default (
   <Route component={App} path='/'>
     <IndexRoute component={MainPage} />
     <Route component={UsersPage} path='users' />
-    <Route component={UserCard} path='users/card/:userId' />
+    <Route component={UserForm} path='users/:userId' />
     <Route component={UserForm} path='users/new' />
   </Route>
 );

@@ -4,6 +4,7 @@ import autoBind from 'react-autobind';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import moment from 'moment';
 
 import { getUserList } from 'ducks/users';
 
@@ -30,7 +31,7 @@ class UsersList extends Component {
     }
 
     onClickTableRow(id) {
-        browserHistory.push(`users/card/${id}`);
+        browserHistory.push(`users/${id}`);
     }
 
     renderEmpty() {
@@ -68,7 +69,7 @@ class UsersList extends Component {
                         return(
                             <tr className="table__tr_cursor" index={user._id} onClick={this.onClickTableRow.bind(this, user._id)}>
                                 <td>{user.name}</td>
-                                <td>{user.birthday}</td>
+                                <td>{moment(user.birthday).format('DD.MM.YYYY')}</td>
                                 <td>{user.city}</td>
                                 <td>{user.adress}</td>
                                 <td>{user.phone}</td>
